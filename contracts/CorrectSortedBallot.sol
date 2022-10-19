@@ -32,7 +32,23 @@ contract CorrectSortedBallot {
         uint256 step = 0;
         while (sortedWords < proposalsBeingSorted.length) {
             if (step >= steps) return (false);
-            // TODO
+
+
+            if (savedIndex >= proposals.length) {
+                sortedWords = proposalsBeingSorted.length - swaps;
+                swaps = 0;
+                savedIndex = 1;
+            } else {
+                Proposal memory prevObj = proposalsBeingSorted[savedIndex - 1];
+                if (
+                    uint256(prevObj.name) > uint256(proposalsBeingSorted[savedIndex].name)
+                ) {
+                    proposalsBeingSorted[savedIndex - 1] = proposalsBeingSorted[savedIndex];
+                    proposalsBeingSorted[savedIndex] = prevObj;
+                    swaps++;
+                }
+                savedIndex++;
+            }
             step++;
         }
         proposals = proposalsBeingSorted;

@@ -59,3 +59,5 @@ contract CorrectSortedBallot {
         isSorted = sortedWords == proposals.length;
     }
 }
+
+
